@@ -163,4 +163,21 @@ Modules are an integral piece of any robust application's architecture and typic
 
 # The Prototype Pattern - Creational
 
-  The Prototype Pattern is based on prototypal inheritance where we create objects which act as prototypes for other objects. Basically, the prototype object itself is effectively used as a blueprint for each object the constructor creates.
+-  The Prototype Pattern is based on prototypal inheritance where we create objects which act as prototypes for other objects. Basically, the prototype object itself is effectively used as a blueprint for each object the constructor creates.
+
+    - `prototypal inheritance avoids using classes altogether. There isn't a "definition" object nor a core object in theory. We're simply creating copies of existing functional objects.`
+
+-  Not only is the pattern an easy way to implement inheritance, but it can also come with a performance boost as well: when defining a function in an object, they're all created by reference (so all child objects point to the same function) instead of creating their own individual copies.
+
+# The Command Pattern - Behavioral
+
+  The general idea behind the Command pattern is that it provides us a means to separate the responsibilities of issuing commands from anything executing commands, delegating this responsibility to different objects instead.
+
+- They consistently include an execution operation ```(such as run() or execute())```
+
+- Command objects with the same interface can easily be swapped as needed and this is considered one of the larger benefits of the pattern.
+
+# The Facade Pattern - Structural
+
+# The Factory Pattern - Creational
+
