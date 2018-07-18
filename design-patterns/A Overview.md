@@ -41,7 +41,7 @@
 | Proxy       | A place holder object representing the true object.                                                           |
 
 
-# The Module Pattern
+# The Module Pattern - Creational / Structural
 <!-- Does let eliminate the need for module pattern? -->
 
 Modules are an integral piece of any robust application's architecture and typically help in keeping the units of code for a project both cleanly separated and organized.
@@ -61,14 +61,106 @@ Modules are an integral piece of any robust application's architecture and typic
 - As T.J Crowder has pointed out in the past, it also enables us to return different functions depending on the environment. In the past, I've seen developers use this to perform UA testing in order to provide a code-path in their module specific to IE, but we can easily opt for feature detection these days to achieve a similar goal.
 
 
+# The Revealing Module Pattern - Creational / Structural
+
+**Advantages**
+
+- This pattern allows the syntax of our scripts to be more consistent. It also makes it more clear at the end of the module which of our functions and variables may be accessed publicly which eases readability.
+
+**Disadvantages**
+
+-  A disadvantage of this pattern is that if a private function refers to a public function, that public function can't be overridden if a patch is necessary. This is because the private function will continue to refer to the private implementation and the pattern doesn't apply to public members, only to functions.
+
+- Public object members which refer to private variables are also subject to the no-patch rule notes above.
+
+- As a result of this, modules created with the Revealing Module pattern may be more fragile than those created with the original Module pattern, so care should be taken during usage.
+
+# The Singleton Pattern - Creational
+      
+- Whilst the Singleton has valid uses, often when we find ourselves needing it in JavaScript it's a sign that we may need to re-evaluate our design.
+
+- They're often an indication that modules in a system are either tightly coupled or that logic is overly spread across multiple parts of a codebase. Singletons can be more difficult to test due to issues ranging from hidden dependencies, the difficulty in creating multiple instances, difficulty in stubbing dependencies and so on.
+      
+- The Singleton pattern is named that way because it restricts instantiation of a class to a single object. 
+      
+- Singletons differ from static classes (or objects) as we can delay their initialization, generally because they require some information that may not be available during initialization time. They don't provide a way for code that is unaware of a previous reference to them to easily retrieve them. This is because it is neither the object or "class" that's returned by a Singleton, it's a structure. Think of how closured variables aren't actually closures - the function scope that provides the closure is the closure.
+      
+# The Observer Pattern - Behavioral
+
+- The Observer is a design pattern where an object (known as a subject) maintains a list of objects depending on it (observers), automatically notifying them of any changes to state.
+
+- `"One or more observers are interested in the state of a subject and register their interest with the subject by attaching themselves. When something changes in our subject that the observer may be interested in, a notify message is sent which calls the update method in each observer. When the observer is no longer interested in the subject's state, they can simply detach themselves."`
+      
+  - **Advantages**
+
+  - The Observer and Publish/Subscribe patterns encourage us to think hard about the relationships between different parts of our application. 
+  
+    > These patterns remain one of the best tools for designing decoupled systems
+
+  - This effectively could be used to break down an application into smaller, more loosely coupled blocks to improve code management and potentials for re-use.
 
 
+  - Observer pattern useful when we need to maintain consistency between related objects without making classes tightly coupled
+  
+    > For example, when an object needs to be able to notify other objects without making assumptions regarding those objects.
+
+  - **Disadvantages**
+
+  - Publish/Subscribe, by decoupling publishers from subscribers, it can sometimes become difficult to obtain guarantees that particular parts of our applications are functioning as we may expect.
+
+  - Another draw-back of the pattern is that subscribers are quite ignorant to the existence of each other and are blind to the cost of switching publishers. Due to the dynamic relationship between subscribers and publishers, the update dependency can be difficult to track.
+
+  - Can be hard to debugger 
+    > For example, publishers may make an assumption that one or more subscribers are listening to them. Say that we're using such an assumption to log or output errors regarding some application process. If the subscriber performing the logging crashes (or for some reason fails to function), the publisher won't have a way of seeing this due to the decoupled nature of the system.
+
+  ### Observer Pattern - Publish/Subscribe Implementations
+
+  - Refer to [This](https://github.com/addyosmani/pubsubz) Repo for pubsubz basic implementation example. to find this section in the book, click [this](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#mediatorpatternjavascript) link and scroll up
+
+  - Publish/Subscribe fits in very well in JavaScript ecosystems mostly because ECMAScript implementations are event driven. This is particularly true in browser environments as the DOM uses events as its main interaction API for scripting.
+
+  > That said, neither ECMAScript nor DOM provide core objects or methods for creating custom events systems in implementation code (with the exception of perhaps the DOM3 CustomEvent, which is bound to the DOM and is thus not generically useful).
+  
+  > Un fucking surprisingly, there's libraries for that, such as dojo, jQuery (custom events) and YUI already have utilities that can assist in easily implementing a Publish/Subscribe system with very little effort. Below we can see some examples of this:
+
+  > For those wishing to use the Publish/Subscribe pattern with another library or vanilla,
+  - **BULLSHIT NEEDS JQUERY** AmplifyJS includes a clean, library-agnostic implementation that can be used with any library or toolkit. 
+  - Radio.js (http://radio.uxder.com/),
+  - PubSubJS (https://github.com/mroderick/PubSubJS) or Pure JS PubSub by Peter Higgins 
+    - (https://github.com/phiggins42/bloody-jquery-plugins/blob/55e41df9bf08f42378bb08b93efcb28555b61aeb/pubsub.js) are also similar alternatives worth checking out.
       
-      
-      
-      
-      
-      
-      
-      
-      
+# The Mediator Pattern - Behavioral
+  - In general, the mediator pattern just provides an alternative to tightly coupled systems
+
+  - Behavioral design pattern that allows us to expose a unified interface through which the different parts of a system may communicate.
+
+  - Promotes loose coupling by ensuring that instead of components referring to each other explicitly, their interaction is handled through this central point.
+
+    >A centralized controller is key to the success of this system and that's really the role a Mediator plays in software design.
+
+  - A Mediator is an object that coordinates interactions (logic and behavior) between multiple objects. It makes decisions on when to call which objects, based on the actions (or inaction) of other objects and input.
+
+- **Advantages**
+
+    - Reduces the communication channels needed from many to one between objects and/or components in a system
+
+    - Relatively easy to add new publishers & subscribers due to decoupling
+
+- **Disadvantages**
+
+    - Can create a single point of failure
+
+    - Impacts performance by creating indirect communication
+
+  ###  Mediator vs Facade
+  - Seem similar because :
+  
+    `They both abstract the functionality of existing modules`
+ 
+  - The Mediator pattern centralizes communication it's an actual controller that can change how objects interact with eachother by understanding what is needed based on the information it is given
+
+  - The Facade pattern just makes a simpler interface to interact with a module or system without adding new functionality
+
+# The Prototype Pattern - Creational
+
+  The Prototype Pattern is based on prototypal inheritance where we create objects which act as prototypes for other objects. Basically, the prototype object itself is effectively used as a blueprint for each object the constructor creates.
