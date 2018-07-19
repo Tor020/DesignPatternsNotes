@@ -1,3 +1,5 @@
+
+
 // make sure it doesn't count my own properties
 (function () {
     var results, currentWindow,
