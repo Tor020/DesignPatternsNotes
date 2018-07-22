@@ -179,5 +179,61 @@ Modules are an integral piece of any robust application's architecture and typic
 
 # The Facade Pattern - Structural
 
+  The Facade pattern both simplifies the interface of a class and it also decouples the class from the code that utilizes it. This gives us the ability to indirectly interact with subsystems in a way that can sometimes be less prone to error than accessing the subsystem directly. 
+
+  - This pattern provides a convenient higher-level interface to a larger body of code, hiding its true underlying complexity. Think of it as simplifying the API being presented to other developers, something which almost always improves usability.
+
+    - This allows us to interact with the Facade directly rather than the subsystem behind the scenes. 
+
+- **Disadvantages**
+
+  - Performance cost can be significant since there is always an additional cost in utilizing an abstraction since it is unnecessary by design.
+
 # The Factory Pattern - Creational
 
+Where the factory pattern differs from other creational patterns is in that it doesn't explicitly require us to use a constructor. A Factory can provide a generic interface for creating objects, where we can specify the type of factory object we wish to be created.
+
+  - **When To Use**
+
+    - When our object or component setup involves a high level of complexity
+    - When we need to easily generate different instances of objects depending on the environment we are in
+    - When we're working with many small objects or components that share the same properties
+    - When composing objects with instances of other objects that need only satisfy an API contract (aka, duck typing) to work. This is useful for decoupling.
+  
+  - **Possible Problems**
+
+    - When applied to the wrong type of problem, this pattern can introduce an unnecessarily great deal of complexity to an application. Unless providing an interface for object creation is a design goal for the library or framework we are writing, I would suggest sticking to explicit constructors to avoid the unnecessary overhead.
+
+    - Due to the fact that the process of object creation is effectively abstracted behind an interface, this can also introduce problems with unit testing depending on just how complex this process might be.
+
+### The Factory Pattern - Abstract Factories
+  
+Aims to encapsulate a group of individual factories with a common goal. It separates the details of implementation of a set of objects from their general usage. An Abstract Factory should be used where a system must be independent from the way the objects it creates are generated or it needs to work with multiple types of objects.
+
+# The Mixin Pattern - Structural
+
+  - Mixins in Javascript means collecting functionality through extension of predefined object methods.
+
+    - Each new object we define has a prototype from which it can inherit further properties. Prototypes can inherit from other object prototypes but, even more importantly, can define properties for any number of object instances. We can leverage this fact to promote function re-use.
+
+    - Mixins allow objects to borrow (or inherit) functionality from them with a minimal amount of complexity. As the pattern works well with JavaScripts object prototypes, it gives us a fairly flexible way to share functionality from not just one Mixin, but effectively many through multiple inheritance.
+
+  - **Criticisms**
+
+    - That said, the downsides to Mixins are a little more debatable. Some developers feel that injecting functionality into an object prototype is a bad idea as it leads to both prototype pollution and a level of uncertainty regarding the origin of our functions.
+      
+      - **This is the argument against extending classes as well.** 
+
+      - True in large systems but good documentation helps mitigate this    
+
+# The Decorator Pattern - Structural
+
+  Decorators are a structural design pattern that aim to promote code re-use. Similar to Mixins, they can be considered another viable alternative to object sub-classing.
+
+# The Flyweight pattern - Structural
+
+  There are two ways to use
+
+  - The first is at the data-layer, where we deal with the concept of sharing data between large quantities of similar objects stored in memory.
+
+  - The second is at the DOM-layer where the Flyweight can be used as a central event-manager to avoid attaching event handlers to every child element in a parent container we wish to have some similar behavior.
